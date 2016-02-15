@@ -1620,7 +1620,10 @@ proc can2svg::dummy {} {
 
 proc menu_save {mytoplevel} {
     if { ! [file isdirectory $::fileopendir]} {set ::fileopendir $::env(HOME)}
-    set filename [tk_getSaveFile -initialfile pd.svg \
+    set name [lookup_windowname $mytoplevel]
+    # check if this is the default name 'Untitled' and if so, use 'pd.svg'
+    # else strip the trailing .pd and add .svg
+    set filename [tk_getSaveFile -initialfile ${name}.svg \
                       -defaultextension .svg \
                       -filetypes { {{Scalable Vector Graphics} {.svg}} } \
                       -initialdir $::fileopendir \
