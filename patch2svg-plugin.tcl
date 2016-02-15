@@ -10,9 +10,9 @@ package require pdwindow 0.1
 
 namespace eval ::patch2svg:: {
     variable label
-  proc save {canvas filename} {
-    can2svg::canvas2file $canvas $filename
-  }
+    proc save {mytoplevel filename} {
+        can2svg::canvas2file [tkcanvas_name $mytoplevel] $filename
+    }
 
 #  can2svg.tcl ---
 #  
