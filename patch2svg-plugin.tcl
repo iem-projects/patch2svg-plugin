@@ -1,5 +1,5 @@
 # META convert a patch to a picture (SVG)
-# META DESCRIPTION saves your patch as an SVG-image
+# META DESCRIPTION exports your patch as an SVG-image
 # META AUTHOR IOhannes m zmölnig <zmoelnig@umlaeute.mur.at>
 # META VERSION 0.1
 
