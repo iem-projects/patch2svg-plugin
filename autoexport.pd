@@ -1,0 +1,14 @@
+#N canvas 446 419 596 293 10;
+#X obj 103 83 loadbang;
+#X obj 103 105 t b;
+#X obj 103 127 delay 1000;
+#X obj 103 149 t b b;
+#X obj 103 171 delay 100;
+#X msg 103 193 \; pd quit;
+#X msg 182 180 \; pd plugin-dispatch ::patch2svg::exportall;
+#X connect 0 0 1 0;
+#X connect 1 0 2 0;
+#X connect 2 0 3 0;
+#X connect 3 0 4 0;
+#X connect 3 1 6 0;
+#X connect 4 0 5 0;
