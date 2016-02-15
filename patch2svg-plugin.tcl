@@ -10,12 +10,12 @@ package require pdwindow 0.1
 
 namespace eval ::patch2svg:: {
     variable label
-    proc save {mytoplevel filename} {
+    proc export {mytoplevel filename} {
         can2svg::canvas2file [tkcanvas_name $mytoplevel] $filename
     }
-# ::patch2svg::saveall
-    proc saveall {{template "%s%x.svg"}} {
-        ## saves all open windows to SVG
+# ::patch2svg::exportall
+    proc exportall {{template "%s%x.svg"}} {
+        ## exports all open windows to SVG
         ## template vars:
         ##  - '%s' window name
         ##  - '%x' window id
@@ -1643,7 +1643,7 @@ proc can2svg::dummy {} {
 
 #-------------------------------------------------------------------------------
 
-proc menu_save {mytoplevel} {
+proc menu_export {mytoplevel} {
     if { ! [file isdirectory $::fileopendir]} {set ::fileopendir $::env(HOME)}
     set name [lookup_windowname $mytoplevel]
     # check if this is the default name 'Untitled' and if so, use 'pd.svg'
@@ -1677,7 +1677,7 @@ proc register {} {
     #$mymenu insert $inserthere separator
     $mymenu insert $inserthere command \
         -label $::patch2svg::label \
-        -command {::patch2svg::menu_save $::focused_window}
+        -command {::patch2svg::menu_export $::focused_window}
     # bind all <$::modifier-Key-s> {::deken::open_helpbrowser .helpbrowser2}
     bind PatchWindow <FocusIn> "+::patch2svg::focus %W 1"
     bind PdWindow    <FocusIn> "+::patch2svg::focus %W 0"
