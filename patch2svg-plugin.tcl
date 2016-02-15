@@ -9,6 +9,7 @@ package require pdwindow 0.1
 #package require tinyfileutils
 
 namespace eval ::patch2svg:: {
+    variable label
   proc save {canvas filename} {
     can2svg::canvas2file $canvas $filename
   }
@@ -1633,6 +1634,7 @@ proc menu_save {mytoplevel} {
 
 proc register {} {
     # create an entry for our "print2svg" in the "file" menu
+    set ::patch2svg::label [_ "Save patch as image..."]
     set mymenu .menubar.file
     if {$::windowingsystem eq "aqua"} {
         set inserthere 8
@@ -1640,7 +1642,9 @@ proc register {} {
         set inserthere 8
     }
     #$mymenu insert $inserthere separator
-    $mymenu insert $inserthere command -label [_ "Save patch as image..."] -command {::patch2svg::menu_save $::focused_window}
+    $mymenu insert $inserthere command \
+        -label $::patch2svg::label \
+        -command {::patch2svg::menu_save $::focused_window}
     # bind all <$::modifier-Key-s> {::deken::open_helpbrowser .helpbrowser2}
 
     pdtk_post "loaded patch2svg-plugin\n"
