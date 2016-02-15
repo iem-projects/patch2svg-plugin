@@ -1688,6 +1688,7 @@ proc register {} {
     bind PatchWindow <FocusIn> "+::patch2svg::focus %W 1"
     bind PdWindow    <FocusIn> "+::patch2svg::focus %W 0"
 
+    ::pd_connect::register_plugin_dispatch_receiver ::patch2svg::exportall ::patch2svg::exportall
 
     pdtk_post "loaded patch2svg-plugin\n"
 }
