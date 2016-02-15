@@ -1635,6 +1635,11 @@ proc menu_save {mytoplevel} {
     }
 }
 
+proc focus {winid state} {
+    set menustate [expr $state?"normal":"disabled"]
+    .menubar.file entryconfigure $::patch2svg::label -state $menustate
+}
+
 proc register {} {
     # create an entry for our "print2svg" in the "file" menu
     set ::patch2svg::label [_ "Save patch as image..."]
@@ -1649,6 +1654,9 @@ proc register {} {
         -label $::patch2svg::label \
         -command {::patch2svg::menu_save $::focused_window}
     # bind all <$::modifier-Key-s> {::deken::open_helpbrowser .helpbrowser2}
+    bind PatchWindow <FocusIn> "+::patch2svg::focus %W 1"
+    bind PdWindow    <FocusIn> "+::patch2svg::focus %W 0"
+
 
     pdtk_post "loaded patch2svg-plugin\n"
 }
