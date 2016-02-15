@@ -23,8 +23,13 @@ namespace eval ::patch2svg:: {
         foreach w [get_patchwindows] {
             set wname [lookup_windowname $w]
             set name [string map [list %s "$wname" %x "$w"] $template]
-            pdtk_post "exporting to SVG: $name"
-            save $w $name
+            pdtk_post "exporting to SVG: $name\n"
+            puts "w $w"
+            puts "wname $wname"
+            puts "name $name"
+            puts "template $template"
+            puts ""
+            export $w $name
         }
     }
     proc is_patchwindow {w} {
