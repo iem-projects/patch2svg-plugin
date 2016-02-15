@@ -316,7 +316,7 @@ proc can2svg::svgasxmllist {cmd args} {
 	    lappend xmlLL $defsStipplePatternArr($stipple)
 	}
     }
-    puts "can2svg::svgasxmllist cmd=$cmd, args=$args"
+    #puts "can2svg::svgasxmllist cmd=$cmd, args=$args"
     
     switch -- $type {
 	
@@ -1447,8 +1447,6 @@ proc can2svg::canvas2file {wcan path args} {
     variable confopts
     variable defsArrowMarkerArr
     variable defsStipplePatternArr
-    puts "canvas: $wcan"
-    puts "file  : $path"
     array set argsA [array get confopts]
     foreach {x y width height} [$wcan cget -scrollregion] break
     array set argsA [list -width $width -height $height]
