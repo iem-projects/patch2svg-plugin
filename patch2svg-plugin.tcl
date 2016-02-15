@@ -13,6 +13,33 @@ namespace eval ::patch2svg:: {
     proc save {mytoplevel filename} {
         can2svg::canvas2file [tkcanvas_name $mytoplevel] $filename
     }
+# ::patch2svg::saveall
+    proc saveall {{template "%s%x.svg"}} {
+        ## saves all open windows to SVG
+        ## template vars:
+        ##  - '%s' window name
+        ##  - '%x' window id
+        foreach w [get_patchwindows] {
+            set wname [lookup_windowname $w]
+            set name [string map [list %s "$wname" %x "$w"] $template]
+            pdtk_post "exporting to SVG: $name"
+            save $w $name
+        }
+    }
+    proc is_patchwindow {w} {
+        #expr {[winfo toplevel $w] eq $w && ![catch {$w cget -menu}]}
+        expr {[winfo class $w] eq "PatchWindow"}
+    }
+    proc get_patchwindows {{w .}} {
+        set list {}
+        if {[is_patchwindow $w]} {
+            lappend list $w
+        }
+        foreach w [winfo children $w] {
+            lappend list {*}[get_patchwindows $w]
+        }
+        return $list
+    }
 
 #  can2svg.tcl ---
 #  
