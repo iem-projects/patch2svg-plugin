@@ -1640,7 +1640,7 @@ proc focus {winid state} {
 
 proc register {} {
     # create an entry for our "print2svg" in the "file" menu
-    set ::patch2svg::label [_ "Save patch as image..."]
+    set ::patch2svg::label [_ "Export patch as image..."]
     set mymenu .menubar.file
     if {$::windowingsystem eq "aqua"} {
         set inserthere 8
