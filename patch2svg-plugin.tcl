@@ -19,6 +19,7 @@ namespace eval ::patch2svg:: {
         ## template vars:
         ##  - '%s' window name
         ##  - '%x' window id
+        if {[string length $template] == 0 } {set template "%s%x.svg" }
         foreach w [get_patchwindows] {
             set wname [lookup_windowname $w]
             set name [string map [list %s "$wname" %x "$w"] $template]
