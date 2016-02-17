@@ -5,9 +5,9 @@
 #, fuzzy
 msgid ""
 msgstr ""
-"Project-Id-Version: Export patch as SVG 1.0\n"
+"Project-Id-Version: patch to SVG 1.0\n"
 "Report-Msgid-Bugs-To: http://bugs.puredata.info\n"
-"POT-Creation-Date: 2016-02-17 22:31:35+0100\n"
+"POT-Creation-Date: 2016-02-17 22:39+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
