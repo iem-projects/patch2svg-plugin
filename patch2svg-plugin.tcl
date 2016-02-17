@@ -1683,6 +1683,7 @@ proc register {} {
     #$mymenu insert $inserthere separator
     $mymenu insert $inserthere command \
         -label $::patch2svg::label \
+        -state disabled \
         -command {::patch2svg::menu_export $::focused_window}
     # bind all <$::modifier-Key-s> {::deken::open_helpbrowser .helpbrowser2}
     bind PatchWindow <FocusIn> "+::patch2svg::focus %W 1"
