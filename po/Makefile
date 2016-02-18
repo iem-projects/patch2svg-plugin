@@ -17,8 +17,8 @@ all: $(TEMPLATE) $(MSGFILES)
 clean:
 	-rm -f -- $(MSGFILES)
 	-rm -f -- $(POFILES:=~)
-distclean: clean
 	-rm -f -- $(TEMPLATE)
+distclean: clean
 
 po: $(TEMPLATE) $(POFILES)
 
