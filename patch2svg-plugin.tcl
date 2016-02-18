@@ -1692,12 +1692,12 @@ proc register {} {
     ::pd_connect::register_plugin_dispatch_receiver ::patch2svg::exportall ::patch2svg::exportall
 
     pdtk_post "loaded patch2svg-plugin\n"
+
+
+
 }
 
 }
 
 
 ::patch2svg::register
-
-
-
