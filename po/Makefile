@@ -3,11 +3,9 @@ PACKAGE_NAME = patch to SVG
 PACKAGE_VERSION = 1.0
 TCLFILES = patch2svg-plugin.tcl
 
-# these are the supported languages, 
-#ALL_LINGUAS = da de el en_gb fr it ja ko pt pt_pt zh_tw
-ALL_LINGUAS = de
-POFILES = $(ALL_LINGUAS:=.po)
-MSGFILES = $(ALL_LINGUAS:=.msg)
+# we use all language files found here
+POFILES=$(wildcard *.po)
+MSGFILES=$(POFILES:.po=.msg)
 
 TEMPLATE = patch2svg.pot
 FILES = $(addprefix ../, $(TCLFILES))
@@ -43,6 +41,8 @@ $(POFILES): $(TEMPLATE)
 	msgfmt --check --tcl --locale=$* -d . $<
 
 
-install: $(MSGFILES)
-	install -d $(DESTDIR)
-	install $(MSGFILES) $(DESTDIR)
+#install: $(MSGFILES)
+#	install -d $(DESTDIR)
+#	install $(MSGFILES) $(DESTDIR)
+install:
+	@echo "nothing to install"
