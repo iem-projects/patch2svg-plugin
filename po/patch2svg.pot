@@ -2,6 +2,9 @@
 # This file is put in the public domain.
 # FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
+#, fuzzy
+msgid ""
+msgstr ""
 "Project-Id-Version: patch to SVG 1.0\n"
 "Report-Msgid-Bugs-To: http://bugs.puredata.info\n"
 "POT-Creation-Date: 2016-02-17 22:39+0100\n"
