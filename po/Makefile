@@ -15,9 +15,10 @@ all: $(TEMPLATE) $(MSGFILES)
 
 # refresh .po files from the template
 clean:
-	-rm -f -- $(TEMPLATE)
 	-rm -f -- $(MSGFILES)
 	-rm -f -- $(POFILES:=~)
+distclean: clean
+	-rm -f -- $(TEMPLATE)
 
 po: $(TEMPLATE) $(POFILES)
 
