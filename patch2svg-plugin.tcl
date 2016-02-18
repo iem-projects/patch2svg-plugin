@@ -4,6 +4,10 @@
 # META VERSION 0.1
 
 package require pdwindow 0.1
+if [catch {
+    package require msgcat
+    ::msgcat::mcload po
+}] { puts "patch2svg: i18n failed" }
 
 #package require uriencode
 #package require tinyfileutils
