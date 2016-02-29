@@ -1,7 +1,7 @@
 Save Pd patches as SVG
 ===
 
-This adds a new menu-item to the "File" menu: "Save patch as image..."
+This adds a new menu-item to the "File" menu: "Save patch as SVG..."
 
 It allows you to save the current Pd patch as an SVG graphics.
 
