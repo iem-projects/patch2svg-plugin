@@ -1,5 +1,5 @@
 Save Pd patches as SVG
-===
+======================
 
 This adds a new menu-item to the "File" menu: "Save patch as SVG..."
 
