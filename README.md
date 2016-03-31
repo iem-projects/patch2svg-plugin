@@ -34,6 +34,5 @@ language, please send me a translation (you can use the patch-tracker for this).
 
 - IOhannes m zmölnig
 
-the canvas2svg converter was original written by Mats Bengtsson
-(and virtually no changes have been made to it).
-- 
+- the canvas2svg converter was original written by Mats Bengtsson
+  (and virtually no changes have been made to it).
