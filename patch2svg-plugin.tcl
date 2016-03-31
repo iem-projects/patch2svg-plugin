@@ -1696,7 +1696,7 @@ proc register {} {
     set rpdr ::pd_connect::register_plugin_dispatch_receiver
     if {[info procs $rpdr] == $rpdr} {
 	${rpdr} ::patch2svg::exportall ::patch2svg::exportall
-    } { puts "ts ts ts" }
+    }
 
     pdtk_post "loaded patch2svg-plugin\n"
 
