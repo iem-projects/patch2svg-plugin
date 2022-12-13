@@ -26,7 +26,8 @@ namespace eval ::patch2svg:: {
         if {[string length $template] == 0 } {set template "%s%x.svg" }
         foreach w [get_patchwindows] {
             set wname [lookup_windowname $w]
-            set name [string map [list %s "$wname" %x "$w"] $template]
+            set wname_ [string map [list "/" "_" " " "_"] $wname]
+            set name [string map [list "%s" "${wname_}" "%x" "$w"] $template]
             pdtk_post "exporting to SVG: $name\n"
             puts "w $w"
             puts "wname $wname"
