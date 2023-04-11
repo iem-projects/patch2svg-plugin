@@ -17,18 +17,21 @@ namespace eval ::patch2svg:: {
     proc export {mytoplevel filename} {
         can2svg::canvas2file [tkcanvas_name $mytoplevel] $filename
     }
+    set counter 0
 # ::patch2svg::exportall
     proc exportall {{template "%s%x.svg"}} {
         ## exports all open windows to SVG
         ## template vars:
         ##  - '%s' window name
         ##  - '%x' window id
+        ##  - '%c' counter (self-incrementing)
         if {[string length $template] == 0 } {set template "%s%x.svg" }
         ::pdwindow::debug "patch2svg: template $template\n"
         foreach w [get_patchwindows] {
+            incr ::patch2svg::counter
             set wname [lookup_windowname $w]
             set wname_ [string map [list "/" "_" " " "_"] $wname]
-            set name [string map [list "%s" "${wname_}" "%x" "$w"] $template]
+            set name [string map [list %s "${wname_}" %x "${w}" %c "${::patch2svg::counter}"] $template]
             pdtk_post "exporting to SVG: $name\n"
             ::pdwindow::debug " patch2svg: w $w\n"
             ::pdwindow::debug " patch2svg: wname $wname\n"
