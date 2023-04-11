@@ -24,16 +24,16 @@ namespace eval ::patch2svg:: {
         ##  - '%s' window name
         ##  - '%x' window id
         if {[string length $template] == 0 } {set template "%s%x.svg" }
+        ::pdwindow::debug "patch2svg: template $template\n"
         foreach w [get_patchwindows] {
             set wname [lookup_windowname $w]
             set wname_ [string map [list "/" "_" " " "_"] $wname]
             set name [string map [list "%s" "${wname_}" "%x" "$w"] $template]
             pdtk_post "exporting to SVG: $name\n"
-            puts "w $w"
-            puts "wname $wname"
-            puts "name $name"
-            puts "template $template"
-            puts ""
+            ::pdwindow::debug " patch2svg: w $w\n"
+            ::pdwindow::debug " patch2svg: wname $wname\n"
+            ::pdwindow::debug " patch2svg: fname $name\n"
+            ::pdwindow::debug " patch2svg: \n"
             export $w $name
         }
     }
