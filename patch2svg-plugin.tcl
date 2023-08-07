@@ -482,7 +482,7 @@ proc can2svg::svgasxmllist {cmd args} {
 	    foreach {xbase ybase}  \
 	      [GetTextSVGCoords $coo $anchor $chdata $theFont $nlines] {}
 
-	    set attr [list "x" $xbase "y" $ybase]
+	    set attr {}
 	    if {[string length $idAttr] > 0} {
 		set attr [concat $attr $idAttr]
 	    }
@@ -491,16 +491,23 @@ proc can2svg::svgasxmllist {cmd args} {
 	    set dy 0
 	    if {$nlines > 1} {
 
-		# Use the 'tspan' trick here.
+		# We cannot use the 'tspan' trick here,
+		# as 'textLength' in <tspan> is ignored by most renderers (as of 2023),
+		# even though SVG-1.1 defines it...
 		set subList {}
 		foreach line [split $chdata "\n"] {
-		    lappend subList [MakeXMLList "tspan"  \
-		      -attrlist [list "x" $xbase "dy" $dy] -chdata $line]
+                    set ybase [expr $ybase + $dy]
+		    set subAttr [list "x" $xbase "y" $ybase]
+		    lappend subAttr "textLength" [font measure $theFont $line]
+		    lappend subList [MakeXMLList $elem  \
+		      -attrlist $subAttr -chdata $line]
 		    set dy $lineSpace
 		}
-		lappend xmlLL [MakeXMLList $elem -attrlist $attr \
+		lappend xmlLL [MakeXMLList "g" -attrlist $attr \
 		  -subtags $subList]
 	    } else {
+		lappend attr "textLength" [font measure $theFont $chdata]
+                set attr [concat [list "x" $xbase "y" $ybase] $attr]
 		lappend xmlLL [MakeXMLList $elem -attrlist $attr \
 		  -chdata $chdata]
 	    }
