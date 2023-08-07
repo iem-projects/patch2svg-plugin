@@ -1479,9 +1479,9 @@ proc can2svg::NormalizeRectCoords {coo} {
 
 proc can2svg::makedocument {width height xml} {
 
-    set pre "<?xml version='1.0'?>\n\
+    set pre "<?xml version='1.0' encoding='UTF-8'?>\n\
       <!DOCTYPE svg PUBLIC \"-//W3C//DTD SVG 1.1//EN\"\
-      \"Graphics/SVG/1.1/DTD/svg11.dtd\">"
+      \"http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd\">"
     set svgStart "<svg width='$width' height='$height' version='1.1' xmlns='http://www.w3.org/2000/svg' xmlns:xlink='http://www.w3.org/1999/xlink'>"
     set svgEnd "</svg>"
     return "${pre}\n${svgStart}\n${xml}${svgEnd}"
