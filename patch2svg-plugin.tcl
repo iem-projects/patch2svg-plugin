@@ -15,44 +15,44 @@ if [catch {
 namespace eval ::patch2svg:: {
     variable label
     proc export {mytoplevel filename} {
-        can2svg::canvas2file [tkcanvas_name $mytoplevel] $filename
+	can2svg::canvas2file [tkcanvas_name $mytoplevel] $filename
     }
     set counter 0
 # ::patch2svg::exportall
     proc exportall {{template "%s%x.svg"}} {
-        ## exports all open windows to SVG
-        ## template vars:
-        ##  - '%s' window name
-        ##  - '%x' window id
-        ##  - '%c' counter (self-incrementing)
-        if {[string length $template] == 0 } {set template "%s%x.svg" }
-        ::pdwindow::debug "patch2svg: template $template\n"
-        foreach w [get_patchwindows] {
-            incr ::patch2svg::counter
-            set wname [lookup_windowname $w]
-            set wname_ [string map [list "/" "_" " " "_"] $wname]
-            set name [string map [list %s "${wname_}" %x "${w}" %c "${::patch2svg::counter}"] $template]
-            pdtk_post "exporting to SVG: $name\n"
-            ::pdwindow::debug " patch2svg: w $w\n"
-            ::pdwindow::debug " patch2svg: wname $wname\n"
-            ::pdwindow::debug " patch2svg: fname $name\n"
-            ::pdwindow::debug " patch2svg: \n"
-            export $w $name
-        }
+	## exports all open windows to SVG
+	## template vars:
+	##  - '%s' window name
+	##  - '%x' window id
+	##  - '%c' counter (self-incrementing)
+	if {[string length $template] == 0 } {set template "%s%x.svg" }
+	::pdwindow::debug "patch2svg: template $template\n"
+	foreach w [get_patchwindows] {
+	    incr ::patch2svg::counter
+	    set wname [lookup_windowname $w]
+	    set wname_ [string map [list "/" "_" " " "_"] $wname]
+	    set name [string map [list %s "${wname_}" %x "${w}" %c "${::patch2svg::counter}"] $template]
+	    pdtk_post "exporting to SVG: $name\n"
+	    ::pdwindow::debug " patch2svg: w $w\n"
+	    ::pdwindow::debug " patch2svg: wname $wname\n"
+	    ::pdwindow::debug " patch2svg: fname $name\n"
+	    ::pdwindow::debug " patch2svg: \n"
+	    export $w $name
+	}
     }
     proc is_patchwindow {w} {
-        #expr {[winfo toplevel $w] eq $w && ![catch {$w cget -menu}]}
-        expr {[winfo class $w] eq "PatchWindow"}
+	#expr {[winfo toplevel $w] eq $w && ![catch {$w cget -menu}]}
+	expr {[winfo class $w] eq "PatchWindow"}
     }
     proc get_patchwindows {{w .}} {
-        set list {}
-        if {[is_patchwindow $w]} {
-            lappend list $w
-        }
-        foreach w [winfo children $w] {
-            lappend list {*}[get_patchwindows $w]
-        }
-        return $list
+	set list {}
+	if {[is_patchwindow $w]} {
+	    lappend list $w
+	}
+	foreach w [winfo children $w] {
+	    lappend list {*}[get_patchwindows $w]
+	}
+	return $list
     }
 
 #  can2svg.tcl ---
@@ -72,32 +72,32 @@ namespace eval ::patch2svg:: {
 #
 #   SYNOPSIS
 #      can2svg canvasCmd ?options?
-#           canvasCmd is everything except the widget path name.
+#	   canvasCmd is everything except the widget path name.
 #
 #      can2svg::canvas2file widgetPath fileName ?options?
-#           options:   -height
-#                      -width
+#	   options:   -height
+#		      -width
 #
 #      can2svg::can2svg canvasCmd ?options?
-#           options:    -httpbasedir        path
-#                       -imagehandler       tclProc
-#                       -ovalasellipse      0|1
-#                       -reusedefs          0|1
-#                       -uritype            file|http
-#                       -usestyleattribute  0|1
-#                       -usetags            0|all|first|last
-#                       -windowitemhandler  tclProc
+#	   options:    -httpbasedir	path
+#		       -imagehandler       tclProc
+#		       -ovalasellipse      0|1
+#		       -reusedefs	  0|1
+#		       -uritype	    file|http
+#		       -usestyleattribute  0|1
+#		       -usetags	    0|all|first|last
+#		       -windowitemhandler  tclProc
 #
 #      can2svg::config ?options?
-#           options:	-allownewlines      0
-#	                -filtertags         ""
-#	                -httpaddr           localhost
-#	                -ovalasellipse      0
-#	                -reusedefs          1
-#	                -uritype            file
-#	                -usetags            all
-#	                -usestyleattribute  1
-#                       -windowitemhandler  tclProc
+#	   options:	-allownewlines      0
+#			-filtertags	 ""
+#			-httpaddr	   localhost
+#			-ovalasellipse      0
+#			-reusedefs	  1
+#			-uritype	    file
+#			-usetags	    all
+#			-usestyleattribute  1
+#		       -windowitemhandler  tclProc
 #
 # ########################### CHANGES ##########################################
 #
@@ -120,13 +120,13 @@ namespace eval can2svg {
 
     variable confopts
     array set confopts {
-	-allownewlines        0
-	-filtertags           ""
-	-httpaddr             localhost
-	-ovalasellipse        0
-	-reusedefs            1
-	-uritype              file
-	-usetags              all
+	-allownewlines	0
+	-filtertags	   ""
+	-httpaddr	     localhost
+	-ovalasellipse	0
+	-reusedefs	    1
+	-uritype	      file
+	-usetags	      all
 	-usestyleattribute    1
 	-windowitemhandler    ""
     }
@@ -202,14 +202,14 @@ proc can2svg::config {args} {
 #       Make xml out of a canvas command, widgetPath removed.
 #
 # Arguments:
-#       cmd         canvas create commands without prepending widget path.
-#       args    -httpbasedir        path
-#               -imagehandler       tclProc
-#               -ovalasellipse      0|1
-#               -reusedefs          0|1
-#               -uritype            file|http
-#               -usestyleattribute  0|1
-#               -usetags            0|all|first|last
+#       cmd	 canvas create commands without prepending widget path.
+#       args    -httpbasedir	path
+#	       -imagehandler       tclProc
+#	       -ovalasellipse      0|1
+#	       -reusedefs	  0|1
+#	       -uritype	    file|http
+#	       -usestyleattribute  0|1
+#	       -usetags	    0|all|first|last
 #
 # Results:
 #   xml data
@@ -228,14 +228,14 @@ proc can2svg::can2svg {cmd args} {
 #       Make a list of xmllists out of a canvas command, widgetPath removed.
 #
 # Arguments:
-#       cmd         canvas create command without prepending widget path.
-#       args    -httpbasedir        path
-#               -imagehandler       tclProc
-#               -ovalasellipse      0|1
-#               -reusedefs          0|1
-#               -uritype            file|http
-#               -usestyleattribute  0|1
-#               -usetags            0|all|first|last
+#       cmd	 canvas create command without prepending widget path.
+#       args    -httpbasedir	path
+#	       -imagehandler       tclProc
+#	       -ovalasellipse      0|1
+#	       -reusedefs	  0|1
+#	       -uritype	    file|http
+#	       -usestyleattribute  0|1
+#	       -usetags	    0|all|first|last
 #
 # Results:
 #       a list of xmllist = {tag attrlist isempty cdata {child1 child2 ...}}
@@ -384,12 +384,12 @@ proc can2svg::svgasxmllist {cmd args} {
 	    lappend xmlLL [MakeXMLList $elem -attrlist $attr]
 	}
 	bitmap - image {
-            if {[info exists optA(-image)]} {
-	        set elem "image"
-	        set attr [eval {MakeImageAttr $coo $opts} $args]
-	        if {[string length $idAttr] > 0} {
-	            set attr [concat $attr $idAttr]
-	        }
+	    if {[info exists optA(-image)]} {
+		set elem "image"
+		set attr [eval {MakeImageAttr $coo $opts} $args]
+		if {[string length $idAttr] > 0} {
+		    set attr [concat $attr $idAttr]
+		}
 		set subEs [list]
 		if {[info exists argsA(-imagehandler)]} {
 		    set subE [uplevel #0 $argsA(-imagehandler) [list $cmd] $args]
@@ -507,7 +507,7 @@ proc can2svg::svgasxmllist {cmd args} {
 		# even though SVG-1.1 defines it...
 		set subList {}
 		foreach line [split $chdata "\n"] {
-                    set ybase [expr $ybase + $dy]
+		    set ybase [expr $ybase + $dy]
 		    set subAttr [list "x" $xbase "y" $ybase]
 		    lappend subAttr "textLength" [font measure $theFont $line]
 		    lappend subList [MakeXMLList $elem  \
@@ -518,7 +518,7 @@ proc can2svg::svgasxmllist {cmd args} {
 		  -subtags $subList]
 	    } else {
 		lappend attr "textLength" [font measure $theFont $chdata]
-                set attr [concat [list "x" $xbase "y" $ybase] $attr]
+		set attr [concat [list "x" $xbase "y" $ybase] $attr]
 		lappend xmlLL [MakeXMLList $elem -attrlist $attr \
 		  -chdata $chdata]
 	    }
@@ -570,9 +570,9 @@ proc can2svg::CoordsToAttr {type coo opts svgElementVar} {
 	}
 	bitmap - image {
 	    array set __optA $opts
-            if {[info exists __optA(-image)]} {
-	        set elem "image"
-	        set attr [ImageCoordsToAttr $coo $opts]
+	    if {[info exists __optA(-image)]} {
+		set elem "image"
+		set attr [ImageCoordsToAttr $coo $opts]
 	    }
 	}
 	line {
@@ -750,7 +750,7 @@ proc can2svg::MakeAttrList {type opts usestyleattribute} {
 #       Produce the SVG style attribute from the canvas item options.
 #
 # Arguments:
-#       type        tk canvas widget item type
+#       type	tk canvas widget item type
 #       opts
 #
 # Results:
@@ -1201,7 +1201,7 @@ proc can2svg::ImageCoordsToAttrBU {coo opts} {
 #       the canvas text item.
 #
 # Arguments:
-#       coo         {x y}
+#       coo	 {x y}
 #       anchor
 #       chdata      character data, newlines included.
 #
@@ -1278,8 +1278,8 @@ proc can2svg::GetTextSVGCoords {coo anchor chdata theFont nlines} {
 #       Make the path data string for a bezier.
 #
 # Arguments:
-#       type        canvas type: line or polygon
-#       coo         its coordinate list
+#       type	canvas type: line or polygon
+#       coo	 its coordinate list
 #
 # Results:
 #       path data string
@@ -1359,10 +1359,10 @@ proc can2svg::ParseSplineToPath {type coo} {
 #       Make the xml for an arrow marker def element.
 #
 # Arguments:
-#       a           arrows length along its symmetry line
-#       b           arrows total length
-#       c           arrows half width
-#       col         its color
+#       a	   arrows length along its symmetry line
+#       b	   arrows total length
+#       c	   arrows half width
+#       col	 its color
 #
 # Results:
 #       a list of xmllists of the marker def elements, both start and last.
@@ -1494,10 +1494,10 @@ proc can2svg::makedocument {width height xml} {
 #       and puts it on a file.
 #
 # Arguments:
-#       wcan        the canvas widget path
-#       path        the file path
+#       wcan	the canvas widget path
+#       path	the file path
 #       args:   -height
-#               -width
+#	       -width
 #
 # Results:
 #
@@ -1590,15 +1590,15 @@ proc can2svg::MakeXML {xmlList} {
 # Arguments:
 #       tagname:    the name of this element.
 #       args:
-#           -empty   0|1      Is this an empty tag? If $chdata
-#                             and $subtags are empty, then whether
-#                             to make the tag empty or not is decided
-#                             here. (default: 1)
+#	   -empty   0|1      Is this an empty tag? If $chdata
+#			     and $subtags are empty, then whether
+#			     to make the tag empty or not is decided
+#			     here. (default: 1)
 #	    -attrlist {attr1 value1 attr2 value2 ..}   Vars is a list
-#                             consisting of attr/value pairs, as shown.
+#			     consisting of attr/value pairs, as shown.
 #	    -chdata $chdata   ChData of tag (default: "").
 #	    -subtags {$subchilds $subchilds ...} is a list containing xmldata
-#                             of $tagname's subtags. (default: no sub-tags)
+#			     of $tagname's subtags. (default: no sub-tags)
 #
 # Results:
 #       a list suitable for can2svg::MakeXML.
@@ -1681,14 +1681,14 @@ proc menu_export {mytoplevel} {
     # check if this is the default name 'Untitled' and if so, use 'pd.svg'
     # else strip the trailing .pd and add .svg
     set filename [tk_getSaveFile -initialfile ${name}.svg \
-                      -defaultextension .svg \
-                      -filetypes { {{Scalable Vector Graphics} {.svg}} } \
-                      -initialdir $::fileopendir \
-                 ]
+		      -defaultextension .svg \
+		      -filetypes { {{Scalable Vector Graphics} {.svg}} } \
+		      -initialdir $::fileopendir \
+		 ]
     if {$filename ne ""} {
-        set cnv [tkcanvas_name $mytoplevel]
-        can2svg::canvas2file $cnv $filename
-        set ::fileopendir [file dirname $filename]
+	set cnv [tkcanvas_name $mytoplevel]
+	can2svg::canvas2file $cnv $filename
+	set ::fileopendir [file dirname $filename]
     }
 }
 
@@ -1702,15 +1702,15 @@ proc register {} {
     set ::patch2svg::label [_ "Export patch as SVG..."]
     set mymenu .menubar.file
     if {$::windowingsystem eq "aqua"} {
-        set inserthere 8
+	set inserthere 8
     } else {
-        set inserthere 8
+	set inserthere 8
     }
     #$mymenu insert $inserthere separator
     $mymenu insert $inserthere command \
-        -label $::patch2svg::label \
-        -state disabled \
-        -command {::patch2svg::menu_export $::focused_window}
+	-label $::patch2svg::label \
+	-state disabled \
+	-command {::patch2svg::menu_export $::focused_window}
     # bind all <$::modifier-Key-s> {::deken::open_helpbrowser .helpbrowser2}
     bind PatchWindow <FocusIn> "+::patch2svg::focus %W 1"
     bind PdWindow    <FocusIn> "+::patch2svg::focus %W 0"
