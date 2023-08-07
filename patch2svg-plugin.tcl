@@ -299,26 +299,36 @@ proc can2svg::svgasxmllist {cmd args} {
     } else {
 	set fillValue black
     }
+    set id ""
     if {[string length $argsA(-filtertags)] && [info exists optA(-tags)]} {
 	set tag [uplevel #0 $argsA(-filtertags) [list $optA(-tags)]]
-	set idAttr [list id $tag]
+	set id $tag
     } elseif {($argsA(-usetags) != "0") && [info exists optA(-tags)]} {
 
 	# Remove any 'current' tag.
 	set optA(-tags) \
 	  [lsearch -all -not -inline $optA(-tags) current]
 
+	set id ""
 	switch -- $argsA(-usetags) {
 	    all {
-		set idAttr [list id $optA(-tags)]
+		set id $optA(-tags)
 	    }
 	    first {
-		set idAttr [list id [lindex $optA(-tags) 0]]
+		set id [lindex $optA(-tags) 0]
 	    }
 	    last {
-		set idAttr [list id [lindex $optA(-tags) end]]
+		set id [lindex $optA(-tags) end]
 	    }
 	}
+    }
+    set id [string trim $id]
+    if { $id != {} } {
+	if { ! [string is alpha [string index $id 0] ] } {
+	    set id "PD$id"
+	}
+	set id [string map {" " "__"} $id]
+	set idAttr [list id $id]
     } else {
 	set idAttr ""
     }
