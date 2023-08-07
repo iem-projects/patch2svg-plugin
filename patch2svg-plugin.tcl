@@ -455,7 +455,8 @@ proc can2svg::svgasxmllist {cmd args} {
 	    set ascent [font metrics $theFont -ascent]
 	    set lineSpace [font metrics $theFont -linespace]
 	    if {[info exists optA(-text)]} {
-		set chdata $optA(-text)
+		set placeholder "\uFFFD"
+		set chdata [regsub -all "\[^${placeholder}\[:print:\]\]" $optA(-text) ${placeholder}]
 
 		if {[info exists optA(-width)]} {
 
